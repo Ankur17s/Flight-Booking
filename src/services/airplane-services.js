@@ -50,7 +50,23 @@ async function destroyAirplane(id) {
         if (error.statusCode == StatusCodes.NOT_FOUND) {
             throw new AppError('The Airplane you requested to delete is not Found', error.statusCode);
         }
-        throw new AppError('Cannot fetch the airplane', StatusCodes.INTERNAL_SERVER_ERROR)
+        throw new AppError('Cannot remove the airplane', StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
+
+async function updateAirplane(id, data) {
+    try {
+        const response = await airplaneRepository.update(id, data);
+        return response;
+    } catch (error) {
+        if (error.name === 'SequelizeValidationError') {
+            let explanation = [];
+            error.errors.forEach((err) => {
+                explanation.push(err.message)
+            })
+            throw new AppError(explanation, StatusCodes.BAD_REQUEST)
+        }
+        throw new AppError('Cannot update the airplane', StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
@@ -58,5 +74,6 @@ module.exports = {
     createAirplane,
     getAirplanes,
     getAirplane,
-    destroyAirplane
+    destroyAirplane,
+    updateAirplane
 }

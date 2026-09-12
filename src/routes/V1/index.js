@@ -4,11 +4,9 @@ const { InfoController } = require('../../controllers')
 
 const airplaneRoutes = require('./airplane-routes');
 
-const { AirplaneMiddlewares } = require('../../middlewares')
-
 const router = express.Router();
 
-router.use('/airplanes', AirplaneMiddlewares.validateCreateRequest, airplaneRoutes)
+router.use('/airplanes', airplaneRoutes)
 
 router.get('/info', InfoController.info);
 

@@ -5,6 +5,7 @@ const AppError = require('../utils/errors/app-error');
 
 function validateCreateRequest(req, res, next) {
     if (!req.body.modelNumber) {
+        console.log('runs')
         ErrorResponse.message = 'Something went wrong while Creating Airplane'
         ErrorResponse.error = new AppError(['Model Number not found in the incoming request'], StatusCodes.BAD_REQUEST)
         return res
