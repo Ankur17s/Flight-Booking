@@ -1,4 +1,6 @@
-const { Logger } = require('../config')
+const { StatusCodes } = require('http-status-codes');
+const { Logger } = require('../config');
+const AppError = require('../utils/errors/app-error');
 
 class CRUDRepository {
     constructor(model) {
@@ -21,6 +23,9 @@ class CRUDRepository {
 
     async get(data) {
         const response = await this.model.findByPk(data);
+        if(!response) {
+            throw new AppError('The Airplane you requested is not Found', StatusCodes.NOT_FOUND)
+        }
         return response;
     }
 

@@ -10,7 +10,10 @@ router.post('/',
     AirplaneMiddlewares.validateCreateRequest,
     AirplanceController.createAirplane);
 
-// api/v1/airplanes POST
+// api/v1/airplanes GET
 router.get('/', AirplanceController.getAirplanes);
+
+// api/v1/airplanes/:id GET
+router.get('/:id', AirplanceController.getAirplane);
 
 module.exports = router;
